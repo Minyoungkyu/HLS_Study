@@ -1,0 +1,23 @@
+server:
+  port: 8091
+spring:
+  output:
+    ansi:
+      enabled: always
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&serverTimezone=Asia/Seoul
+    username: root
+    password:
+custom:
+  genFile:
+    dirPath: c:/temp/demo5
+ffmpeg:
+  path: C:/temp/demo/bin/ffmpeg/bin/ffmpeg.exe
+ffprobe:
+  path: C:/temp/demo/bin/ffmpeg/bin/ffprobe.exe
+

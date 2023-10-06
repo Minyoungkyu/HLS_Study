@@ -1,0 +1,63 @@
+<!doctype html>
+<html
+        lang="ko"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE" th:text="바로잡다"></title>
+
+    <!-- 제이쿼리 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- toastr 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link href="https://jhs512.github.io/toastr/toastr.css" rel="stylesheet">
+
+    <!-- 폰트어썸 아이콘 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- 아이콘 목록 : https://fontawesome.com/search?o=r&m=free -->
+</head>
+<body>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.7/dist/full.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="/resource/common/common.css" rel="stylesheet">
+<script src="/resource/common/common.js"></script>
+
+<div class="min-h-screen flex flex-col">
+
+    <form class="flex flex-col gap-6" enctype="multipart/form-data" method="POST" name="join-form"
+          onsubmit="submitVideoSaving(this); return false;"
+          th:action>
+
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">프로필 이미지</span>
+            </label>
+            <input accept="video/mp4, video/avi, video/mkv" class="file-input file-input-bordered"
+                   name="testVideo"
+                   type="file">
+        </div>
+
+        <div>
+            <button class="btn btn-block btn-primary gap-1">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>회원가입</span>
+            </button>
+
+        </div>
+    </form>
+
+    <script>
+        let submitVideoSavingFormDone = false;
+
+
+        form.submit();
+        submitVideoSavingFormDone = true;
+        }
+    </script>
+
+</div>
