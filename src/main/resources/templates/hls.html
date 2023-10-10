@@ -3,99 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet"/>
     <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-quality-levels/2.0.9/videojs-contrib-quality-levels.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector@1.1.4/dist/videojs-hls-quality-selector.min.js"></script>
 
 </head>
 <body>
 
-<video id="video" class="video-js vjs-default-skin" controls preload="auto"  width="2000" autoplay="autoplay" data-setup='{}'></video>
+<video id="video" class="video-js vjs-default-skin" controls preload="auto" width="2000" autoplay="autoplay"
+       data-setup='{}'>
 
-<select id="quality-selector" onchange="selectQuality(this.value)">
-</select>
-
+</video>
 
 <script th:inline="javascript">
-    var videoUrl = /*[[ ${videoUrl} ]]*/;
-     /*]]*/
 
-     // 플레이어 초기화
-     var player = videojs("video");
+    document.addEventListener("DOMContentLoaded", function() {
 
-     // 요청 헤더 설정
-     videojs.Vhs.xhr.beforeRequest = function (options) {
-         options.headers = {
-             Authorization: 'Bearer ' + "userToken"
-         };
-         return options;
-     };
+        var player = videojs('video');
+        player.ready(function() {
+            player.qualityLevels();
+            player.hlsQualitySelector();
 
-     // 소스 설정
-     player.src({
-         src: videoUrl,
-         type: "application/x-mpegurl"
-     });
-
-    player.ready(function() {
-        // Video.js 플레이어가 준비되면 이벤트 리스너를 추가합니다.
-        window.addEventListener('keydown', function(event) {
-            if (event.keyCode === 37) { // 왼쪽 방향키
-                var newTime = player.currentTime() - 5;
-                if (newTime < 0) newTime = 0; // 동영상 시작 지점을 넘지 않도록 합니다.
-                player.currentTime(newTime);
-            } else if (event.keyCode === 39) { // 오른쪽 방향키
-                var newTime = player.currentTime() + 5;
-                if (newTime > player.duration()) newTime = player.duration(); // 동영상 끝 지점을 넘지 않도록 합니다.
-                player.currentTime(newTime);
-            }
         });
+
+        player.src({
+            src: /*[[${videoUrl}]]*/,
+            type: 'application/x-mpegURL'
+        });
+
     });
 
-
-    player.ready(function() {
-        var logResolutionInterval = setInterval(function() {
-            var currentResolution;
-            if(player.tech_ && player.tech_.hls && player.tech_.hls.playlists) {
-                // HLS
-                var media = player.tech_.hls.playlists.media();
-                if (media) {
-                    currentResolution = {
-                        width: media.attributes.RESOLUTION.width,
-                        height: media.attributes.RESOLUTION.height
-                    };
-                }
-            } else if(player.videoTracks) {
-                // MP4 등 다른 형식
-                var tracks = player.videoTracks();
-                if (tracks && tracks.length > 0) {
-                    for (var i = 0; i < tracks.length; i++) {
-                        var track = tracks[i];
-                        if (track.selected || track.enabled) {
-                            currentResolution = {
-                                width: track.width,
-                                height: track.height
-                            };
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if(currentResolution) {
-                console.log("Current Resolution: " + currentResolution.width + "x" + currentResolution.height);
-            } else {
-                console.log("Cannot determine resolution.");
-            }
-        }, 3000); // 로그 간격을 3초로 설정
-
-        player.on('ended', function() {
-            clearInterval(logResolutionInterval); // 비디오 재생이 끝나면 로깅을 중지합니다.
-        });
-    });
 </script>
 
 
