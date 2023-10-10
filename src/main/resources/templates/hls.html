@@ -23,8 +23,11 @@
         var player = videojs('video');
         player.ready(function() {
             player.qualityLevels();
-            player.hlsQualitySelector();
-
+            player.hlsQualitySelector({
+                displayCurrentQuality : true ,
+                getCurrentQuality : 'auto' ,
+                sortAscending : true ,
+            });
         });
 
         player.src({
@@ -35,7 +38,22 @@
     });
 
 </script>
-
-
 </body>
+
+<style>
+    .video-js .vjs-control-bar {
+        font-size: 2em; /* 이 값을 조정하여 컨트롤 바의 아이콘 크기를 변경합니다. */
+    }
+
+    .video-js .vjs-control {
+        width: 60px; /* 이 값을 조정하여 컨트롤 버튼의 크기를 변경합니다. */
+    }
+
+    .vjs-quality-level .vjs-menu-title {
+       display: none;
+    }
+
+</style>
+
+
 </html>
