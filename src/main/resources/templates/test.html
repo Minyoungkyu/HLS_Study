@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag & Drop Form</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+<form action="your_server_endpoint" method="post" id="myForm">
+    <div id="sortable">
+        <div class="inputContainer" data-input-name="input1">
+            <input type="text" name="input1" placeholder="Input 1">
+            <input type="hidden" class="order" name="order_input1">
+        </div>
+        <div class="inputContainer" data-input-name="input2">
+            <input type="text" name="input2" placeholder="Input 2">
+            <input type="hidden" class="order" name="order_input2">
+        </div>
+        <div class="inputContainer" data-input-name="input3">
+            <input type="text" name="input3" placeholder="Input 3">
+            <input type="hidden" class="order" name="order_input3">
+        </div>
+    </div>
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    $( "#sortable" ).sortable({
+        update: function(event, ui) {
+            updateOrder();
+        }
+    });
+    $( "#sortable" ).disableSelection();
+
+    $('#myForm').submit(function(e) {
+        updateOrder();
+    });
+
+    function updateOrder() {
+        $('#sortable .inputContainer').each(function(index, element) {
+            $(this).find('.order').val(index + 1);
+        });
+    }
+</script>
+
+</body>
+</html>

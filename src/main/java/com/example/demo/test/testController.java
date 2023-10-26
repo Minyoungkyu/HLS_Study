@@ -19,18 +19,4 @@ public class testController {
     public String showHome() {
         return "index";
     }
-
-    @ResponseBody
-    @PostMapping("/")
-    public String videoSaving(@RequestParam MultipartFile testVideo) {
-
-        System.out.println(testVideo);
-
-        genfileService.save(testVideo);
-
-        return "Good!";
-    }
-
-
-
 }

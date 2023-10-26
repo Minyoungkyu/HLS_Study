@@ -23,8 +23,9 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// ffmpeg cli wrapper
 	implementation 'net.bramp.ffmpeg:ffmpeg:0.7.0'
-	// https://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg
 	implementation group: 'net.bramp.ffmpeg', name: 'ffmpeg', version: '0.7.0'
 
 }

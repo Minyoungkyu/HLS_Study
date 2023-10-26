@@ -33,7 +33,7 @@ public class FFmpegContorller {
 
     private final String inputFilePath = "C:\\mydir\\myfile.mp4";
 
-    private final String outputFilePath = "C:\\mydir\\hls\\myhlsfile";
+    private final String outputFilePath = "C:\\mydir\\hls";
 
     @GetMapping("hls-make")
     public String hlsMakes() {
@@ -49,12 +49,12 @@ public class FFmpegContorller {
 
     @GetMapping("/hls")
     public String videoHls(Model model) {
-        model.addAttribute("videoUrl", "\\hls\\myhlsfile\\master.m3u8");
+        model.addAttribute("videoUrl", "\\hls\\master.m3u8");
         return "hls";
     }
 
-    @GetMapping("/hls/{folderName}/{fileName}.m3u8")
-    public ResponseEntity<Resource> videoHlsM3U8(@PathVariable String fileName) {
+    @GetMapping("/hls/{fileName}.m3u8")
+    public ResponseEntity<Resource> videoHlsMasterM3U8(@PathVariable String fileName) {
 
         System.out.println("호출 됨");
 
@@ -69,9 +69,25 @@ public class FFmpegContorller {
         return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/hls/{fileName}/{tsName}.ts")
-    public ResponseEntity<Resource> videoHlsTs(@PathVariable String fileName, @PathVariable String tsName) {
-        String fileFullPath = outputFilePath + "/" + tsName + ".ts";
+    @GetMapping("/hls/{folderName2}/{fileName}.m3u8")
+    public ResponseEntity<Resource> videoHlsMediaM3U8(@PathVariable String folderName2, @PathVariable String fileName) {
+
+        System.out.println("호출 됨");
+
+        String fileFullPath = outputFilePath + "/" + folderName2 + "/" + fileName + ".m3u8";
+        Resource resource = new FileSystemResource(fileFullPath);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".m3u8");
+        headers.setContentType(MediaType.parseMediaType("application/vnd.apple.mpegurl"));
+
+        System.out.println("실행 됨");
+
+        return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/hls/{folderName2}/{tsName}.ts")
+    public ResponseEntity<Resource> videoHlsTs(@PathVariable String folderName2, @PathVariable String tsName) {
+        String fileFullPath = outputFilePath + "/" + folderName2 + "/" + tsName + ".ts";
         Resource resource = new FileSystemResource(fileFullPath);
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + tsName + ".ts");
